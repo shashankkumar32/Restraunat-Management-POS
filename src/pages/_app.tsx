@@ -9,6 +9,9 @@ import theme from "@/styles/theme";
 import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 
+import { Provider } from "react-redux";
+import store from "../../slice/store";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -32,7 +35,9 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         {/* <Component {...pageProps} />
          */}
-        {getLayout(<Component {...pageProps} />)}
+        <Provider store={store}>
+          {getLayout(<Component {...pageProps} />)}
+        </Provider>
       </ThemeProvider>
     </CacheProvider>
   );

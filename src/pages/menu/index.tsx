@@ -1,8 +1,9 @@
-import type { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { NextPageWithLayout } from "../_app";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   ListItemText,
   Stack,
@@ -10,11 +11,15 @@ import {
 } from "@mui/material";
 import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
- import React from 'react'
+import React from "react";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../../slice/rootReducer";
 
 const Page: NextPageWithLayout = () => {
-  const [select,setSelect]=React.useState()
-  
+  const [select, setSelect] = React.useState();
+  const [list, setList] = useState([]);
+  const dispatch = useDispatch();
+
   const data = [
     {
       text: "Breakfast",
@@ -53,9 +58,13 @@ const Page: NextPageWithLayout = () => {
     <Box sx={{ display: "flex", mt: 2 }}>
       <Box sx={{ width: "920px" }}>
         <Grid container sx={{ my: 2 }} lg={12}>
+          <Button onClick={() => dispatch(hideLoading())}>
+            {" "}
+            state change redux
+          </Button>
           {data.map(({ text, color }, index) => (
             <Grid item key={index} lg={3}>
-              <Button onClick={()=>setSelect(text)} variant="contained">
+              <Button onClick={() => setSelect(text)} variant="contained">
                 <Box
                   sx={{
                     backgroundColor: `${color}`,
@@ -73,43 +82,58 @@ const Page: NextPageWithLayout = () => {
             </Grid>
           ))}
         </Grid>
-        <Dynamiclistview select={select} />
+        <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Stack>
+      <Box sx={{ height: "93vh", backgroundColor: "#111315" }}>
+        <Box sx={{ mt: 5 }}>
+          <Box sx={{ maxHeight: "300px", overflowY: "scroll" }}>
+            {list.map((d, i) => (
+              <Typography key={i} variant="body1">
+                <Chip
+                  sx={{
+                    color: "#FFFFFF",
+                    backgroundColor: "#3C4041",
+                    my: 1,
+                    borderRadius: "10px",
+                    width: "100%",
+                  }}
+                  label={d}
+                  //  onClick={handleClick}
+                  //  onDelete={handleDelete}
+                />
+              </Typography>
+            ))}
+          </Box>
           <Box
-            sx={{ width: "300px", height: "20px", backgroundColor: "#ffff" }}
-          ></Box>
-        </Stack>
-        <Box
-          sx={{
-            width: "300px",
-            backgroundColor: "#3C4041",
-            height: "300px",
-            borderRadius: "10px",
-            mt: 3,
-          }}
-        >
-          order
-          <Box>
-            <Stack>
-              <Typography sx={{ fontSize: "18px", color: "#ffff", mt: 4 }}>
-                subTotal:
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "12px",
-                  color: "#ffff",
-                  mt: 4,
-                  borderBottom: "solid 1px grey",
-                }}
-              >
-                Tax:
-              </Typography>
-              <Typography sx={{ fontSize: "12px", color: "#ffff", mt: 4 }}>
-                Total:
-              </Typography>
-            </Stack>
+            sx={{
+              width: "300px",
+              backgroundColor: "#3C4041",
+              height: "300px",
+              borderRadius: "10px",
+              mt: 3,
+            }}
+          >
+            order
+            <Box>
+              <Stack>
+                <Typography sx={{ fontSize: "18px", color: "#ffff", mt: 4 }}>
+                  subTotal:
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "#ffff",
+                    mt: 4,
+                    borderBottom: "solid 1px grey",
+                  }}
+                >
+                  Tax:
+                </Typography>
+                <Typography sx={{ fontSize: "12px", color: "#ffff", mt: 4 }}>
+                  Total:
+                </Typography>
+              </Stack>
+            </Box>
           </Box>
         </Box>
       </Box>
