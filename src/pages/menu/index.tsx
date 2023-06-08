@@ -13,12 +13,20 @@ import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { hideLoading, showLoading } from "../../../slice/rootReducer";
+import {
+  addToCart,
+  hideLoading,
+  showLoading,
+} from "../../../slice/rootReducer";
 
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState();
   const [list, setList] = useState([]);
   const dispatch = useDispatch();
+
+  const AddCartItem = () => {
+    dispatch(addToCart({ _id: "2", quantity: 2 }));
+  };
 
   const data = [
     {
@@ -58,10 +66,7 @@ const Page: NextPageWithLayout = () => {
     <Box sx={{ display: "flex", mt: 2 }}>
       <Box sx={{ width: "920px" }}>
         <Grid container sx={{ my: 2 }} lg={12}>
-          <Button onClick={() => dispatch(hideLoading())}>
-            {" "}
-            state change redux
-          </Button>
+          {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
           {data.map(({ text, color }, index) => (
             <Grid item key={index} lg={3}>
               <Button onClick={() => setSelect(text)} variant="contained">
@@ -75,7 +80,7 @@ const Page: NextPageWithLayout = () => {
                     width: "160px",
                   }}
                 >
-                  {JSON.stringify(select)}
+                  
                   {text}1
                 </Box>
               </Button>
@@ -85,8 +90,8 @@ const Page: NextPageWithLayout = () => {
         <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
       <Box sx={{ height: "93vh", backgroundColor: "#111315" }}>
-        <Box sx={{ mt: 5 }}>
-          <Box sx={{ maxHeight: "300px", overflowY: "scroll" }}>
+        <Box sx={{ mt: 5,ml:4 }}>
+          <Box sx={{ maxHeight: "300px", overflowY: "auto" }}>
             {list.map((d, i) => (
               <Typography key={i} variant="body1">
                 <Chip
