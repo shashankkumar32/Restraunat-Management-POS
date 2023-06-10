@@ -1,5 +1,11 @@
 import { Box, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  hideLoading,
+  showLoading,
+} from "../../../../slice/rootReducer";
 
 interface props {
   select: any;
@@ -10,8 +16,14 @@ interface props {
 const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
   const [iset, setColor] = useState(true);
   const [arr, setArr] = useState([]);
+  const dispatch = useDispatch();
+
   // const [list, setList] = useState([]);
+  const AddCartItem = (id:any) => {
+    dispatch(addToCart({ _id: id, quantity: 1 }));
+  };
   const onClickfunction = (text: any) => {
+    AddCartItem(text)
     list.push(text);
     setList(list);
     iset ? setColor(false) : setColor(true);

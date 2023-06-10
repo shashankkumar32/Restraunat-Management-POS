@@ -8,17 +8,23 @@ import {
   ListItemText,
   SwipeableDrawer,
   Stack,
+  DialogTitle,
+  IconButton,
   Typography,
 } from "@mui/material";
 import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
 import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import {
   addToCart,
   hideLoading,
   showLoading,
+  deleteFromCart
 } from "../../../slice/rootReducer";
+import {  useSelector } from 'react-redux';
+import TagFacesIcon from '@mui/icons-material/TagFaces';
 type Anchor = "top" | "left" | "bottom" | "right";
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState();
@@ -45,9 +51,13 @@ const Page: NextPageWithLayout = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const AddCartItem = () => {
-    dispatch(addToCart({ _id: "2", quantity: 2 }));
+  const AddCartItem = (id:any) => {
+    dispatch(addToCart({ _id: id, quantity: 1 }));
   };
+  const DeleteCartItem=(id:any)=>{
+    dispatch(deleteFromCart({_id:id}))
+  }
+  const cartItems = useSelector((state) => state.cartItems);
 
   const data = [
     {
@@ -113,7 +123,7 @@ const Page: NextPageWithLayout = () => {
       <Box sx={{ height: "93vh", backgroundColor: "#111315" }}>
         <Box sx={{ mt: 5,ml:4 }}>
           <Box sx={{ maxHeight: "300px", overflowY: "auto" }}>
-            {list.map((d, i) => (
+            {cartItems.map((d, i) => (
               <Typography key={i} variant="body1">
                 <Chip
                   sx={{
@@ -121,12 +131,18 @@ const Page: NextPageWithLayout = () => {
                     backgroundColor: "#3C4041",
                     my: 1,
                     borderRadius: "10px",
+                    display:"flex",
+                    justifyContent:"space-between",
                     width: "100%",
                   }}
-                  label={d}
+                  label={d._id}
                   //  onClick={handleClick}
-                  //  onDelete={handleDelete}
-                />
+                  icon={<IconButton>{d.quantity}</IconButton>}
+                   onDelete={()=>DeleteCartItem(d._id)}
+                   
+                >
+                 sds
+                  </Chip>
               </Typography>
             ))}
           </Box>
@@ -144,6 +160,9 @@ const Page: NextPageWithLayout = () => {
             <Box>
               <Stack sx={{px:3}}>
                 <Typography sx={{ fontSize: "18px", color: "#ffff", mt: 4 }}>
+                  {/* {
+                    JSON.stringify(cartItems)
+                  } */}
                   subTotal:
                 </Typography>
                 <Typography
@@ -169,7 +188,50 @@ const Page: NextPageWithLayout = () => {
         onClose={toggleDrawer("right", false)}
         onOpen={toggleDrawer("right", true)}
       >
-        dfdff
+         <DialogTitle
+          id="alert-dialog-title"
+          sx={{ borderBottom: "0.3px solid #E4E4E4" }}
+        >
+         On your Cart
+          <IconButton
+            aria-label="close"
+            onClick={toggleDrawer("right", false)}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              //   color: (theme) =>  .palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          {/* {open ? (
+        ) : null} */}
+        </DialogTitle>
+        {
+          JSON.stringify(cartItems)
+        }
+        <Box
+          sx={{ width: 520 }}
+          role="presentation"
+          onClick={toggleDrawer("right", false)}
+          onKeyDown={toggleDrawer("right", false)}
+        >
+        <Stack>
+          {
+            cartItems.map((d,i)=>{
+
+          <Typography sx={{fontSize:"16px",fontWeight:"600px",color:"grey"}}>
+           {
+            d._id
+           } *{
+            d.quantity
+           }=100
+            </Typography>
+            })
+          }
+        </Stack>
+        </Box>
         </SwipeableDrawer>
             </Box>
           </Box>
