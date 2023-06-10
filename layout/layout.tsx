@@ -57,7 +57,7 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
             "Accounting",
           ].map((text, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{boxShadow:"inset 0.1px 0.2px 0.2px grey"}}>
                 <Link
                   style={{ textDecoration: "none" }}
                   href={`/${text.toLowerCase()}`}

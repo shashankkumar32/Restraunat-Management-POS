@@ -6,6 +6,7 @@ import {
   Chip,
   Grid,
   ListItemText,
+  SwipeableDrawer,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,11 +19,31 @@ import {
   hideLoading,
   showLoading,
 } from "../../../slice/rootReducer";
-
+type Anchor = "top" | "left" | "bottom" | "right";
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState();
   const [list, setList] = useState([]);
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
   const dispatch = useDispatch();
+  const toggleDrawer =
+  (anchor: Anchor, open: boolean) =>
+  (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   const AddCartItem = () => {
     dispatch(addToCart({ _id: "2", quantity: 2 }));
@@ -116,18 +137,19 @@ const Page: NextPageWithLayout = () => {
               height: "300px",
               borderRadius: "10px",
               mt: 3,
+             
             }}
           >
-            order
+           &nbsp;&nbsp;&nbsp; order
             <Box>
-              <Stack>
+              <Stack sx={{px:3}}>
                 <Typography sx={{ fontSize: "18px", color: "#ffff", mt: 4 }}>
                   subTotal:
                 </Typography>
                 <Typography
                   sx={{
                     fontSize: "12px",
-                    color: "#ffff",
+                    color: "#ffff", 
                     mt: 4,
                     borderBottom: "solid 1px grey",
                   }}
@@ -137,7 +159,18 @@ const Page: NextPageWithLayout = () => {
                 <Typography sx={{ fontSize: "12px", color: "#ffff", mt: 4 }}>
                   Total:
                 </Typography>
+                <Button   onClick={toggleDrawer("right", true)} sx={{backgroundColor:"white",color:"black",fontSize:"19px",fontWeight:"500",mt:4}}>
+                  Place Order
+                  </Button>
               </Stack>
+              <SwipeableDrawer
+        anchor={"right"}
+        open={state["right"]}
+        onClose={toggleDrawer("right", false)}
+        onOpen={toggleDrawer("right", true)}
+      >
+        dfdff
+        </SwipeableDrawer>
             </Box>
           </Box>
         </Box>

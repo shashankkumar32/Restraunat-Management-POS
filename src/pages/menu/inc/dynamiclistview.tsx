@@ -46,7 +46,7 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
     <Box
       sx={{
         width: "920px",
-        overflowX: "scroll",
+        overflowX: "auto",
         "&::-webkit-scrollbar": {
           width: 10,
           height: "10px",
@@ -85,29 +85,7 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
             </Box>
           ))}
       </Box>
-      {/* 
-        <Slider {...settings}>
-          {arr.map(({ text, color }, index) => (
-           <Box sx={{display:"flex"}}>
-              <Button
-                key={index}
-                variant="contained"
-                onClick={() => (color ? setColor(false) : setColor(true))}
-                sx={{
-                  backgroundColor: iset ? "#2d2d2d" : "pink",
-                  borderRadius: "10px",
-
-                  height: "133px",
-                  width: "160px",
-                  borderLeft: "solid 10px pink",
-                }}
-              >
-                {text}1{JSON.stringify(iset)}
-              </Button>
-              </Box>
-          
-          ))}
-        </Slider> */}
+ 
     </Box>
   );
 };
