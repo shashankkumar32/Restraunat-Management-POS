@@ -16,7 +16,7 @@ import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"; 
 import {
   addToCart,
   hideLoading,
@@ -27,7 +27,7 @@ import {  useSelector } from 'react-redux';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 type Anchor = "top" | "left" | "bottom" | "right";
 const Page: NextPageWithLayout = () => {
-  const [select, setSelect] = React.useState();
+  const [select, setSelect] = React.useState('');
   const [list, setList] = useState([]);
   const [state, setState] = React.useState({
     top: false,
@@ -57,7 +57,7 @@ const Page: NextPageWithLayout = () => {
   const DeleteCartItem=(id:any)=>{
     dispatch(deleteFromCart({_id:id}))
   }
-  const cartItems = useSelector((state) => state.cartItems);
+  const cartItems = useSelector((state:any) => state.cartItems);
 
   const data = [
     {
@@ -123,7 +123,7 @@ const Page: NextPageWithLayout = () => {
       <Box sx={{ height: "93vh", backgroundColor: "#111315" }}>
         <Box sx={{ mt: 5,ml:4 }}>
           <Box sx={{ maxHeight: "300px", overflowY: "auto" }}>
-            {cartItems.map((d, i) => (
+            {cartItems.map((d:any, i:any) => (
               <Typography key={i} variant="body1">
                 <Chip
                   sx={{
@@ -140,9 +140,9 @@ const Page: NextPageWithLayout = () => {
                   icon={<IconButton>{d.quantity}</IconButton>}
                    onDelete={()=>DeleteCartItem(d._id)}
                    
-                >
-                 sds
-                  </Chip>
+                />
+                 {/* sds
+                  </Chip> */}
               </Typography>
             ))}
           </Box>
@@ -219,7 +219,7 @@ const Page: NextPageWithLayout = () => {
         >
         <Stack>
           {
-            cartItems.map((d,i)=>{
+            cartItems.map((d:any,i:any)=>{
 
           <Typography sx={{fontSize:"16px",fontWeight:"600px",color:"grey"}}>
            {
