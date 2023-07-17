@@ -28,7 +28,7 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Permanent drawer
+            POS-Billing
           </Typography>
         </Toolbar>
       </AppBar>

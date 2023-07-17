@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -31,21 +31,248 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
   };
 
   const data = [
-    { id: 1, category: "Breakfast", text: "Breakfast", color: "#CFDDDB" },
-    { id: 2, category: "Breakfast", text: "Soups", color: "#E4CDEE" },
-    { id: 3, category: "Breakfast", text: "Pasta", color: "#ba68c8" },
-    { id: 4, category: "Breakfast", text: "Sushi", color: "#03a9f4" },
-    { id: 5, category: "Breakfast", text: "Main Course", color: "#ff9800" },
-    { id: 6, category: "Deserts", text: "Deserts", color: "#4caf50" },
-    { id: 7, category: "Deserts", text: "Drinks", color: "#CFDDDB" },
-    { id: 8, category: "Deserts", text: "Alchol", color: "#CFDDDB" },
-    { id: 9, category: "Deserts", text: "Sushi", color: "#03a9f4" },
-    { id: 10, category: "Deserts", text: "Main Course", color: "#ff9800" },
-    { id: 11, category: "Deserts", text: "Deserts", color: "#4caf50" },
-    { id: 12, category: "Deserts", text: "Drinks", color: "#CFDDDB" },
-    { id: 13, category: "Deserts", text: "Alchol", color: "#CFDDDB" },
+    {
+      "id": 1,
+      "category": "Breakfast",
+      "text": "Classic American Breakfast",
+      "price": "$9.99"
+    },
+    {
+      "id": 2,
+      "category": "Breakfast",
+      "text": "Pancakes with Maple Syrup",
+      "price": "$7.99"
+    },
+    {
+      "id": 3,
+      "category": "Breakfast",
+      "text": "Avocado Toast",
+      "price": "$6.99"
+    },
+    {
+      "id": 4,
+      "category": "Breakfast",
+      "text": "Eggs Benedict",
+      "price": "$10.99"
+    },
+    {
+      "id": 5,
+      "category": "Breakfast",
+      "text": "Belgian Waffles",
+      "price": "$8.99"
+    },
+    {
+      "id": 6,
+      "category": "Soups",
+      "text": "Tomato Basil Soup",
+      "price": "$5.99"
+    },
+    {
+      "id": 7,
+      "category": "Soups",
+      "text": "Chicken Noodle Soup",
+      "price": "$6.99"
+    },
+    {
+      "id": 8,
+      "category": "Soups",
+      "text": "Minestrone Soup",
+      "price": "$6.99"
+    },
+    {
+      "id": 9,
+      "category": "Soups",
+      "text": "Cream of Mushroom Soup",
+      "price": "$5.99"
+    },
+    {
+      "id": 10,
+      "category": "Soups",
+      "text": "Lentil Soup",
+      "price": "$5.99"
+    },
+    {
+      "id": 11,
+      "category": "Pasta",
+      "text": "Spaghetti Bolognese",
+      "price": "$12.99"
+    },
+    {
+      "id": 12,
+      "category": "Pasta",
+      "text": "Fettuccine Alfredo",
+      "price": "$11.99"
+    },
+    {
+      "id": 13,
+      "category": "Pasta",
+      "text": "Penne Arrabiata",
+      "price": "$10.99"
+    },
+    {
+      "id": 14,
+      "category": "Pasta",
+      "text": "Shrimp Scampi Linguine",
+      "price": "$14.99"
+    },
+    {
+      "id": 15,
+      "category": "Pasta",
+      "text": "Lasagna",
+      "price": "$13.99"
+    },
+    {
+      "id": 16,
+      "category": "Sushi",
+      "text": "California Roll",
+      "price": "$8.99"
+    },
+    {
+      "id": 17,
+      "category": "Sushi",
+      "text": "Salmon Nigiri",
+      "price": "$10.99"
+    },
+    {
+      "id": 18,
+      "category": "Sushi",
+      "text": "Tuna Sashimi",
+      "price": "$12.99"
+    },
+    {
+      "id": 19,
+      "category": "Sushi",
+      "text": "Spicy Tuna Roll",
+      "price": "$9.99"
+    },
+    {
+      "id": 20,
+      "category": "Sushi",
+      "text": "Rainbow Roll",
+      "price": "$11.99"
+    },
+    {
+      "id": 21,
+      "category": "Main Course",
+      "text": "Grilled Steak",
+      "price": "$18.99"
+    },
+    {
+      "id": 22,
+      "category": "Main Course",
+      "text": "Lemon Herb Chicken",
+      "price": "$15.99"
+    },
+    {
+      "id": 23,
+      "category": "Main Course",
+      "text": "Grilled Salmon",
+      "price": "$17.99"
+    },
+    {
+      "id": 24,
+      "category": "Main Course",
+      "text": "Vegetarian Stir-Fry",
+      "price": "$12.99"
+    },
+    {
+      "id": 25,
+      "category": "Main Course",
+      "text": "Braised Lamb Shank",
+      "price": "$19.99"
+    },
+    {
+      "id": 26,
+      "category": "Desserts",
+      "text": "Chocolate Lava Cake",
+      "price": "$6.99"
+    },
+    {
+      "id": 27,
+      "category": "Desserts",
+      "text": "New York Cheesecake",
+      "price": "$5.99"
+    },
+    {
+      "id": 28,
+      "category": "Desserts",
+      "text": "Crème Brûlée",
+      "price": "$7.99"
+    },
+    {
+      "id": 29,
+      "category": "Desserts",
+      "text": "Tiramisu",
+      "price": "$6.99"
+    },
+    {
+      "id": 30,
+      "category": "Desserts",
+      "text": "Fruit Tart",
+      "price": "$5.99"
+    },
+    {
+      "id": 31,
+      "category": "Drinks",
+      "text": "Fresh Orange Juice",
+      "price": "$3.99"
+    },
+    {
+      "id": 32,
+      "category": "Drinks",
+      "text": "Iced Coffee",
+      "price": "$4.99"
+    },
+    {
+      "id": 33,
+      "category": "Drinks",
+      "text": "Lemonade",
+      "price": "$2.99"
+    },
+    {
+      "id": 34,
+      "category": "Drinks",
+      "text": "Hot Tea",
+      "price": "$2.99"
+    },
+    {
+      "id": 35,
+      "category": "Drinks",
+      "text": "Fruit Smoothie",
+      "price": "$5.99"
+    },
+    {
+      "id": 36,
+      "category": "Alcohol",
+      "text": "Beer",
+      "price": "$4.99"
+    },
+    {
+      "id": 37,
+      "category": "Alcohol",
+      "text": "Wine",
+      "price": "$8.99"
+    },
+    {
+      "id": 38,
+      "category": "Alcohol",
+      "text": "Cocktail",
+      "price": "$9.99"
+    },
+    {
+      "id": 39,
+      "category": "Alcohol",
+      "text": "Whiskey",
+      "price": "$12.99"
+    },
+    {
+      "id": 40,
+      "category": "Alcohol",
+      "text": "Vodka",
+      "price": "$10.99"
+    },    
   ];
-  const data2 = [
+    const data2 = [
     { id: 7, category: "Deserts", text: "Drinks", color: "#CFDDDB" },
     { id: 8, category: "Deserts", text: "Alchol", color: "#CFDDDB" },
     { id: 9, category: "Deserts", text: "Sushi", color: "#03a9f4" },
@@ -55,29 +282,29 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
     { id: 13, category: "Deserts", text: "Alchol", color: "#CFDDDB" },
   ];
   return (
-    <Box
-      sx={{
-        width: "920px",
-        overflowX: "auto",
-        "&::-webkit-scrollbar": {
-          width: 10,
-          height: "10px",
-        },
-        "&::-webkit-scrollbar-track": {
-          backgroundColor: "orange",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "red",
-          borderRadius: 2,
-        },
-      }}
-    >
-      <Box sx={{ display: "flex", width: "920px" }}>
+    // <Box
+    //   sx={{
+    //     width: "920px",
+    //     // overflowX: "auto",
+    //     // "&::-webkit-scrollbar": {
+    //     //   width: 10,
+    //     //   height: "10px",
+    //     // },
+    //     // "&::-webkit-scrollbar-track": {
+    //     //   backgroundColor: "orange",
+    //     // },
+    //     // "&::-webkit-scrollbar-thumb": {
+    //     //   backgroundColor: "red",
+    //     //   borderRadius: 2,
+    //     // },
+    //   }}
+    // >
+      <Grid lg={10}sx={{display:"flex" ,width:"720px" }}>
         {data
-          .filter((d) => d.text == select)
-          .map(({ text, color }, index) => (
+          .filter((d) => d.category == select)
+          .map(({ text }, index) => (
             // eslint-disable-next-line react/jsx-key,
-            <Box sx={{ display: "flex" }}>
+            <Grid lg={4}sx={{ display: "flex" }}>
               <Button
                 key={index}
                 variant="contained"
@@ -92,13 +319,13 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
                   borderLeft: "solid 10px pink",
                 }}
               >
-                {text}1{JSON.stringify(iset)}
+                {text}
               </Button>
-            </Box>
+            </Grid>
           ))}
-      </Box>
+      </Grid>
  
-    </Box>
+    // </Box>
   );
 };
 

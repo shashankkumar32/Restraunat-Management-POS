@@ -89,7 +89,7 @@ const Page: NextPageWithLayout = () => {
       color: "#CFDDDB",
     },
     {
-      text: "Alchol",
+      text: "Alcohol",
       color: "#CFDDDB",
     },
   ];
