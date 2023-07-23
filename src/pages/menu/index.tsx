@@ -264,7 +264,7 @@ const Page: NextPageWithLayout = () => {
           {/* {open ? (
         ) : null} */}
         </DialogTitle>
-        {Data("right")}
+        {Data("right")} 
    
         </SwipeableDrawer>
             </Box>
