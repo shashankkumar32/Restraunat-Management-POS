@@ -11,20 +11,27 @@ import {
   DialogTitle,
   IconButton,
   Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Divider,
 } from "@mui/material";
 import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch } from "react-redux"; 
+import { useDispatch,useSelector} from "react-redux"; 
 import {
   addToCart,
   hideLoading,
-  showLoading,
+  showLoading, 
+  updateCart,
   deleteFromCart
 } from "../../../slice/rootReducer";
-import {  useSelector } from 'react-redux';
+
 import TagFacesIcon from '@mui/icons-material/TagFaces';
+import { Anchor } from "@mui/icons-material";
 type Anchor = "top" | "left" | "bottom" | "right";
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState('');
@@ -51,13 +58,29 @@ const Page: NextPageWithLayout = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const AddCartItem = (id:any) => {
-    dispatch(addToCart({ _id: id, quantity: 1 }));
-  };
+  // const AddCartItem = (id:any) => {
+  //   dispatch(addToCart({ _id: id, quantity: 1 }));
+  // };
   const DeleteCartItem=(id:any)=>{
     dispatch(deleteFromCart({_id:id}))
   }
+  const handleIncrease = (item:any) => {
+    const updatedItem = { ...item, quantity: item.quantity + 1 };
+    dispatch(updateCart(updatedItem));
+  };
+
+  const handleDecrease = (item:any) => {
+    if (item.quantity > 1) {
+      const updatedItem = { ...item, quantity: item.quantity - 1 };
+      dispatch(updateCart(updatedItem));
+    } else {
+      dispatch(deleteFromCart({ _id: item._id }));
+    }
+  };
   const cartItems = useSelector((state:any) => state.cartItems);
+
+  const totalAmount = useSelector((state:any) => state.totalAmount);
+
 
   const data = [
     {
@@ -93,6 +116,35 @@ const Page: NextPageWithLayout = () => {
       color: "#CFDDDB",
     },
   ];
+
+  const Data = (anchor: Anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      
+      <List>
+      {
+        cartItems.map((item:any,index:any) => (
+          <ListItem sx={{width:"420px"}} key={index} disablePadding>
+      <ListItemButton >
+        <ListItemIcon>
+          {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+        </ListItemIcon>
+        <ListItemText primary={`${item.quantity}`+ `*`+ `${item._id}`
+        } />
+      </ListItemButton>
+    </ListItem>
+   
+   ))
+  }
+      </List>
+  <Divider />
+    
+    </Box>
+  )
   return (
     <Box sx={{ display: "flex", mt: 2 }}>
       <Box sx={{ width: "920px" }}>
@@ -125,6 +177,8 @@ const Page: NextPageWithLayout = () => {
           <Box sx={{ maxHeight: "300px", overflowY: "auto" }}>
             {cartItems.map((d:any, i:any) => (
               <Typography key={i} variant="body1">
+                
+     
                 <Chip
                   sx={{
                     color: "#FFFFFF",
@@ -137,7 +191,7 @@ const Page: NextPageWithLayout = () => {
                   }}
                   label={d._id}
                   //  onClick={handleClick}
-                  icon={<IconButton>{d.quantity}</IconButton>}
+                  icon={<>  <Button onClick={()=>handleIncrease(d)}>Increase</Button><IconButton>{d.quantity}</IconButton> <Button onClick={()=>handleDecrease(d)}>Decrease</Button></>}
                    onDelete={()=>DeleteCartItem(d._id)}
                    
                 />
@@ -164,6 +218,7 @@ const Page: NextPageWithLayout = () => {
                     JSON.stringify(cartItems)
                   } */}
                   subTotal:
+                  
                 </Typography>
                 <Typography
                   sx={{
@@ -176,7 +231,7 @@ const Page: NextPageWithLayout = () => {
                   Tax:
                 </Typography>
                 <Typography sx={{ fontSize: "12px", color: "#ffff", mt: 4 }}>
-                  Total:
+                  Total:{totalAmount}
                 </Typography>
                 <Button   onClick={toggleDrawer("right", true)} sx={{backgroundColor:"white",color:"black",fontSize:"19px",fontWeight:"500",mt:4}}>
                   Place Order
@@ -187,10 +242,11 @@ const Page: NextPageWithLayout = () => {
         open={state["right"]}
         onClose={toggleDrawer("right", false)}
         onOpen={toggleDrawer("right", true)}
+        sx={{width:"320px"}}
       >
          <DialogTitle
           id="alert-dialog-title"
-          sx={{ borderBottom: "0.3px solid #E4E4E4" }}
+          sx={{ borderBottom: "0.3px solid #E4E4E4" ,width:"400px"}}
         >
          On your Cart
           <IconButton
@@ -208,30 +264,8 @@ const Page: NextPageWithLayout = () => {
           {/* {open ? (
         ) : null} */}
         </DialogTitle>
-        {
-          JSON.stringify(cartItems)
-        }
-        <Box
-          sx={{ width: 520 }}
-          role="presentation"
-          onClick={toggleDrawer("right", false)}
-          onKeyDown={toggleDrawer("right", false)}
-        >
-        <Stack>
-          {
-            cartItems.map((d:any,i:any)=>{
-
-          <Typography sx={{fontSize:"16px",fontWeight:"600px",color:"grey"}}>
-           {
-            d._id
-           } *{
-            d.quantity
-           }=100
-            </Typography>
-            })
-          }
-        </Stack>
-        </Box>
+        {Data("right")}
+   
         </SwipeableDrawer>
             </Box>
           </Box>
