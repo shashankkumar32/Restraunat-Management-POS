@@ -148,7 +148,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <Box sx={{ display: "flex", mt: 2 }}>
       <Box sx={{ width: "920px" }}>
-        <Grid container sx={{ my: 2 }} lg={12}>
+        <Grid container sx={{ mt: 4,py:2,pl:2,boxShadow:"inset 0 0 10px #3C4041" }} lg={12}>
           {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
           {data.map(({ text, color }, index) => (
             <Grid item key={index} lg={3}>
@@ -158,6 +158,7 @@ const Page: NextPageWithLayout = () => {
                     backgroundColor: `${color}`,
                     borderRadius: "10px",
                     p: 1,
+                    
                     mt: 1,
                     height: "133px",
                     width: "160px",
@@ -170,11 +171,21 @@ const Page: NextPageWithLayout = () => {
             </Grid>
           ))}
         </Grid>
+        
         <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
-      <Box sx={{ height: "93vh", backgroundColor: "#111315" }}>
-        <Box sx={{ mt: 5,ml:4 }}>
-          <Box sx={{ maxHeight: "300px", overflowY: "auto" }}>
+      <Box sx={{ mt:4,ml:3, backgroundColor: "#111315" ,boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
+        <Box sx={{ mt: 5,ml:4 ,pr:3}}>
+          <Box sx={{ height: "500px",boxShadow:"inset 0 0 10px #3C4041" ,overflowY: "auto" ,"&::-webkit-scrollbar": {
+	  width: 10
+    },
+    "&::-webkit-scrollbar-track": {
+	  backgroundColor: "#111315"
+    },
+    "&::-webkit-scrollbar-thumb": {
+	  backgroundColor: "#FFC0CB",
+	  borderRadius: 4
+    }}}>
             {cartItems.map((d:any, i:any) => (
               <Typography key={i} variant="body1">
                 
@@ -184,6 +195,7 @@ const Page: NextPageWithLayout = () => {
                     color: "#FFFFFF",
                     backgroundColor: "#3C4041",
                     my: 1,
+                    
                     borderRadius: "10px",
                     display:"flex",
                     justifyContent:"space-between",
@@ -202,11 +214,12 @@ const Page: NextPageWithLayout = () => {
           </Box>
           <Box
             sx={{
-              width: "300px",
+              width: "343px",
               backgroundColor: "#3C4041",
               height: "300px",
               borderRadius: "10px",
-              mt: 3,
+              mt: 2.,
+              mb:2
              
             }}
           >
@@ -266,6 +279,7 @@ const Page: NextPageWithLayout = () => {
         </DialogTitle>
         {Data("right")} 
    
+
         </SwipeableDrawer>
             </Box>
           </Box>

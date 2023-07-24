@@ -299,12 +299,12 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
     //     // },
     //   }}
     // >
-      <Grid lg={10}sx={{display:"flex" ,width:"720px" }}>
+    <Grid container sx={{ mt: 4,py:2,pl:2,boxShadow:"inset 0 0 10px #3C4041" }} lg={12}>
         {data
           .filter((d) => d.category == select)
           .map(({ text ,price}, index) => (
             // eslint-disable-next-line react/jsx-key,
-            <Grid lg={4}sx={{ display: "flex" }}>
+            <Grid item sx={{mt:2}}key={index} lg={3}>
               <Button
                 key={index}
                 variant="contained"
