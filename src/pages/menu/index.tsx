@@ -203,7 +203,7 @@ const Page: NextPageWithLayout = () => {
 	  borderRadius: 4
     }}}>
             {cartItems.map((d:any, i:any) => (
-               <motion.div initial={{ x: -100 }} animate={{ x: 0 }} exit={{ x: -100 }}>
+               <motion.div  key={i}initial={{ x: -100 }} animate={{ x: 0 }} exit={{ x: -100 }}>
               <Typography key={i} variant="body1">
                 
      
