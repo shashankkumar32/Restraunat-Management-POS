@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../_app";
 import {
   Box,
@@ -21,6 +21,7 @@ import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import RemoveIcon from '@mui/icons-material/Remove';
 import { useDispatch,useSelector} from "react-redux"; 
 import {
   addToCart,
@@ -32,6 +33,9 @@ import {
 
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 import { Anchor } from "@mui/icons-material";
+import AddBillForm from "./inc/billingfor";
+import AddIcon from '@mui/icons-material/Add';
+import { motion } from "framer-motion";
 type Anchor = "top" | "left" | "bottom" | "right";
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState('');
@@ -78,7 +82,14 @@ const Page: NextPageWithLayout = () => {
     }
   };
   const cartItems = useSelector((state:any) => state.cartItems);
+  const [containerHeight, setContainerHeight] = useState("90vh"); // Set initial height
 
+  useEffect(() => {
+    // Calculate and set the container height here whenever cart items change
+    // For example:
+    const height = `${90 + cartItems.length * 60}vh`; // Adjust the value based on your cart items' height
+    setContainerHeight(height);
+  }, [cartItems]);
   const totalAmount = useSelector((state:any) => state.totalAmount);
 
 
@@ -151,7 +162,7 @@ const Page: NextPageWithLayout = () => {
         <Grid container sx={{ mt: 4,py:2,pl:2,boxShadow:"inset 0 0 10px #3C4041" }} lg={12}>
           {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
           {data.map(({ text, color }, index) => (
-            <Grid item key={index} lg={3}>
+            <Grid item key={index} lg={3} md={4} sm={6}>
               <Button onClick={() => setSelect(text)} variant="contained">
                 <Box
                   sx={{
@@ -174,11 +185,16 @@ const Page: NextPageWithLayout = () => {
         
         <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
-      <Box sx={{ mt:4,ml:3, backgroundColor: "#111315" ,boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
+      <Box sx={{ mt:4,ml:3, backgroundColor: "#111315" ,height:"90vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
         <Box sx={{ mt: 5,ml:4 ,pr:3}}>
-          <Box sx={{ height: "500px",boxShadow:"inset 0 0 10px #3C4041" ,overflowY: "auto" ,"&::-webkit-scrollbar": {
+          <Box sx={{ 
+            maxHeight: "500px",
+            // boxShadow:"inset 0 0 10px #3C4041"
+            //  ,
+             overflowY: "auto" ,"&::-webkit-scrollbar": {
 	  width: 10
     },
+    overflowX:"hidden",
     "&::-webkit-scrollbar-track": {
 	  backgroundColor: "#111315"
     },
@@ -187,6 +203,7 @@ const Page: NextPageWithLayout = () => {
 	  borderRadius: 4
     }}}>
             {cartItems.map((d:any, i:any) => (
+               <motion.div initial={{ x: -100 }} animate={{ x: 0 }} exit={{ x: -100 }}>
               <Typography key={i} variant="body1">
                 
      
@@ -195,6 +212,7 @@ const Page: NextPageWithLayout = () => {
                     color: "#FFFFFF",
                     backgroundColor: "#3C4041",
                     my: 1,
+                    height:"40px",
                     
                     borderRadius: "10px",
                     display:"flex",
@@ -203,15 +221,17 @@ const Page: NextPageWithLayout = () => {
                   }}
                   label={d._id}
                   //  onClick={handleClick}
-                  icon={<>  <Button onClick={()=>handleIncrease(d)}>Increase</Button><IconButton>{d.quantity}</IconButton> <Button onClick={()=>handleDecrease(d)}>Decrease</Button></>}
+                  icon={<> <Box sx={{width:"100px",pl:1}}> <IconButton sx={{backgroundColor:"#FFC0CB",height:"30px",width:"30px"}}onClick={()=>handleIncrease(d)}><AddIcon/></IconButton><IconButton sx={{mx:1 ,backgroundColor:"#fff",height:"30px",width:"30px"}}>{d.quantity}</IconButton> <IconButton sx={{backgroundColor:"#FFC0CB",height:"30px",width:"30px"}} onClick={()=>handleDecrease(d)}><RemoveIcon /></IconButton></Box></>}
                    onDelete={()=>DeleteCartItem(d._id)}
                    
                 />
                  {/* sds
                   </Chip> */}
               </Typography>
+              </motion.div>
             ))}
           </Box>
+          <motion.div initial={{ height: "90vh" }} animate={{ height: containerHeight }} exit={{ height: "90vh" }}>
           <Box
             sx={{
               width: "343px",
@@ -219,7 +239,8 @@ const Page: NextPageWithLayout = () => {
               height: "300px",
               borderRadius: "10px",
               mt: 2.,
-              mb:2
+              mb:2,
+              overflowY:"hidden"
              
             }}
           >
@@ -278,11 +299,12 @@ const Page: NextPageWithLayout = () => {
         ) : null} */}
         </DialogTitle>
         {Data("right")} 
-   
+        <AddBillForm/>
 
         </SwipeableDrawer>
             </Box>
           </Box>
+          </motion.div>
         </Box>
       </Box>
     </Box>
@@ -290,7 +312,7 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <PermanentDrawerLeft>{page}</PermanentDrawerLeft>;
+  return <PermanentDrawerLeft><Box sx={{overflowY:"hidden"}}>{page}</Box></PermanentDrawerLeft>
 };
 
 export default Page;
