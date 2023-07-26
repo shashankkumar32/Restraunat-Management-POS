@@ -23,6 +23,12 @@ import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useDispatch,useSelector} from "react-redux"; 
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
+import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import RiceBowlIcon from '@mui/icons-material/RiceBowl';
+import RamenDiningIcon from '@mui/icons-material/RamenDining';
+import CakeIcon from '@mui/icons-material/Cake';
 import {
   addToCart,
   hideLoading,
@@ -96,35 +102,43 @@ const Page: NextPageWithLayout = () => {
   const data = [
     {
       text: "Breakfast",
-      color: "#CFDDDB",
+      color: "rgba(207,221,219,40)",
+      icon:<FreeBreakfastIcon sx={{color:"black"}}/>
     },
     {
       text: "Soups",
-      color: "#E4CDEE",
+      color: "rgb(230,208,238,40)",
+      icons:<SoupKitchenIcon sx={{color:"black"}}/>
     },
     {
       text: "Pasta",
-      color: "#ba68c8",
+      color: "rgb(241,200,208)",
+      icons:<RamenDiningIcon sx={{color:"black"}}/>
     },
     {
       text: "Sushi",
-      color: "#03a9f4",
+      color: "rgb(201,202,239)",
+      icons:<RiceBowlIcon sx={{color:"black"}}/>
     },
     {
       text: "Main Course",
-      color: "#ff9800",
+      color: "rgb(250,193,217)",
+      icons:<RestaurantIcon sx={{color:"black"}}/>
     },
     {
       text: "Deserts",
-      color: "#4caf50",
+      color: "rgb(229,218,222)",
+      icons:<CakeIcon sx={{color:"black"}}/>
     },
     {
       text: "Drinks",
-      color: "#CFDDDB",
+      color: "rgb(241,200,208)",
+      icons:<CakeIcon sx={{color:"black"}}/>
     },
     {
       text: "Alcohol",
-      color: "#CFDDDB",
+      color: "rgb(194,233,221)",
+      icons:<CakeIcon sx={{color:"black"}}/>
     },
   ];
 
@@ -159,24 +173,36 @@ const Page: NextPageWithLayout = () => {
   return (
     <Box sx={{ display: "flex", mt: 2 }}>
       <Box sx={{ width: "920px" }}>
-        <Grid container sx={{ mt: 4,py:2,pl:2,boxShadow:"inset 0 0 10px #3C4041" }} lg={12}>
+        <Grid container sx={{ mt: 4,py:2,pl:2,
+          // boxShadow:"inset 0 0 10px #3C4041"
+           }} lg={12}>
           {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
-          {data.map(({ text, color }, index) => (
+          {data.map(({ text, color,icons }, index) => (
             <Grid item key={index} lg={3} md={4} sm={6}>
-              <Button onClick={() => setSelect(text)} variant="contained">
+              <Button sx={{textTransform:"none"}} onClick={() => setSelect(text)} variant="contained">
                 <Box
                   sx={{
+                    WebkitBackdropFilter:"blur(8px)",
+                    backdropFilter:"blur(8px)",
                     backgroundColor: `${color}`,
+                    // backgroundColor: "rgb(228 228 228 / 15%)",
                     borderRadius: "10px",
                     p: 1,
-                    
+                    boxShadow:"rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
                     mt: 1,
-                    height: "133px",
-                    width: "160px",
+                    height: "120px",
+                    width: "180px",
                   }}
                 >
+                  <Stack>
+
+                  {icons}
                   
-                  {text}1
+                  <Typography sx={{color:"black",fontWeight:500,fontSize:"20px"}}>
+                    
+                    {text}
+                    </Typography>
+                  </Stack>
                 </Box>
               </Button>
             </Grid>
@@ -189,6 +215,8 @@ const Page: NextPageWithLayout = () => {
         <Box sx={{ mt: 5,ml:4 ,pr:3}}>
           <Box sx={{ 
             maxHeight: "500px",
+        
+
             // boxShadow:"inset 0 0 10px #3C4041"
             //  ,
              overflowY: "auto" ,"&::-webkit-scrollbar": {

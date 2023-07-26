@@ -12,13 +12,29 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
-const drawerWidth = 180;
+const drawerWidth = 140;
 interface props {
   children: React.ReactNode;
 }
 
 const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
+  const[select,setSelect]=React.useState("")
+  const router = useRouter()
+  const clickHandler=(text:any)=>{
+    setSelect(text)
+    if (typeof text === 'string') {
+      const small = text.toLowerCase();
+      // setSelect(small);
+      router.push(`/${small}`);
+    } else {
+      // Handle the case where text is not a string
+      // You can throw an error, show an error message, or handle it in any other way.
+    }
+  //  const  small=text.toLowerCase()
+  //   router.push(`/${small}`)
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -35,10 +51,12 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
       <Drawer
         sx={{
           width: drawerWidth,
+          borderRight:"white solid 10px",
           flexShrink: 0,
 
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            borderRight:"#FFC0CB solid 2px",
             boxSizing: "border-box",
             backgroundColor: "primary.main",
           },
@@ -46,7 +64,8 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Toolbar>dfdf</Toolbar>
+        
         <Divider />
         <List sx={{ backgroundColor: "primary.main", color: "primary.light" }}>
           {[
@@ -57,12 +76,12 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
             "Accounting",
           ].map((text, index) => (
             <ListItem key={index} disablePadding>
-              <ListItemButton sx={{boxShadow:"inset 0.1px 0.2px 0.2px grey"}}>
+              <ListItemButton onClick={()=>  clickHandler(text)}sx={{boxShadow:"inset 0.1px 0.2px 0.2px grey",backgroundColor:select==text?"#FFC0CB":"",py:4}}>
                 <Link
                   style={{ textDecoration: "none" }}
                   href={`/${text.toLowerCase()}`}
                 >
-                  <ListItemText sx={{ color: "#ffffff" }} primary={text} />
+                  <ListItemText sx={{color:select==text?"black":"#ffffff"}} primary={text} />
                 </Link>
               </ListItemButton>
             </ListItem>
