@@ -213,8 +213,8 @@ const Page: NextPageWithLayout = () => {
         
         <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
-      <Box sx={{ mt:4,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"90vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
-        <Box sx={{ mt: 5,ml:4 ,pr:3}}>
+      <Box sx={{ mt:3,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
+        <Box sx={{ mt: 3,ml:4 ,pr:3}}>
           <Box sx={{ 
             maxHeight: "500px",
         
