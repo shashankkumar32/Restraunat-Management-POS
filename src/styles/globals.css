@@ -1,5 +1,34 @@
 
-
+*{
+  background-color: black;
+}
 .slick-slide {
   margin: 0 20px;
+}
+.custom-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Disable default scrollbar on WebKit-based browsers */
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbar styles for WebKit-based browsers */
+.custom-scrollbar {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #111315;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ffc0cb;
+  border-radius: 4px;
 }

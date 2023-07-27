@@ -11,6 +11,7 @@ import type { NextPage } from "next";
 
 import { Provider } from "react-redux";
 import store from "../../slice/store";
+import CustomScrollbarWrapper from "../../UI/globalscroll";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -36,7 +37,9 @@ export default function MyApp(props: MyAppProps) {
         {/* <Component {...pageProps} />
          */}
         <Provider store={store}>
+        <CustomScrollbarWrapper>
           {getLayout(<Component {...pageProps} />)}
+          </CustomScrollbarWrapper>
         </Provider>
       </ThemeProvider>
     </CacheProvider>

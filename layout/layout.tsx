@@ -36,7 +36,7 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
   //   router.push(`/${small}`)
   }
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -53,6 +53,7 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
           width: drawerWidth,
           borderRight:"white solid 10px",
           flexShrink: 0,
+     
 
           "& .MuiDrawer-paper": {
             width: drawerWidth,
