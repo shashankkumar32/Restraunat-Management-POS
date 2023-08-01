@@ -13,6 +13,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import { Paper, useMediaQuery, useTheme } from "@mui/material";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ArchiveIcon from "@mui/icons-material/Archive";
 
 const drawerWidth = 140;
 interface props {
@@ -20,6 +26,9 @@ interface props {
 }
 
 const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
+  const theme = useTheme();
+  const onlyMediumScreen = useMediaQuery(theme.breakpoints.down(600));
+  const [value, setValue] = React.useState(0);
   const[select,setSelect]=React.useState("")
   const router = useRouter()
   const clickHandler=(text:any)=>{
@@ -35,7 +44,9 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
   //  const  small=text.toLowerCase()
   //   router.push(`/${small}`)
   }
-  return (
+  return (<>
+  {
+    !onlyMediumScreen?
     <Box sx={{ display: "flex", }}>
       <CssBaseline />
       <AppBar
@@ -90,12 +101,37 @@ const PermanentDrawerLeft: React.FC<props> = ({ children }) => {
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: "primary.main", p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, bgcolor: "primary.main", p: 3 ,xs: 'block', sm: 'none'}}>
         {/* <Toolbar /> */}
 
         {children}
       </Box>
-    </Box>
+    </Box>:
+     <Box sx={{ pb: 7 }} >
+     <CssBaseline />
+     <List>
+       sssd
+       {children}
+     </List>
+     <Paper
+       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+       elevation={3}
+     >
+       <BottomNavigation
+         showLabels
+         value={value}
+         onChange={(event, newValue) => {
+           setValue(newValue);
+         }}
+       >
+         <BottomNavigationAction label="Reservation" icon={<RestoreIcon />} />
+         <BottomNavigationAction label="Menu" icon={<FavoriteIcon />} />
+         <BottomNavigationAction label="Accounting" icon={<ArchiveIcon />} />
+       </BottomNavigation>
+     </Paper>
+   </Box>
+  }
+   </>
   );
 };
 

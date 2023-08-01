@@ -69,6 +69,25 @@ const Page: NextPageWithLayout = () => {
 
     setState({ ...state, [anchor]: open });
   };
+  const [scrollLimit, setScrollLimit] = useState(1200);
+
+  const handleScroll = () => {
+    if (window.scrollY > scrollLimit) {
+      window.scrollTo(0, scrollLimit);
+    }
+  };
+
+  useEffect(() => {
+    const handleScrollEvent = () => {
+      handleScroll();
+    };
+
+    window.addEventListener('scroll', handleScrollEvent);
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollEvent);
+    };
+  }, []);
 
   // const AddCartItem = (id:any) => {
   //   dispatch(addToCart({ _id: id, quantity: 1 }));
@@ -173,7 +192,7 @@ const Page: NextPageWithLayout = () => {
     </Box>
   )
   return (
-    <Box sx={{ display: "flex", mt: 2,height:"140vh"}}>
+    <Box sx={{ display: "flex", mt: 2,}}>
       <Box sx={{ width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"} }}>
         <Grid container sx={{ mt: 4,py:2,pl:2,height:{lg:"320px",md:"400px",sm:"500px",xs:"400px"},overflowY:"auto"
           // boxShadow:"inset 0 0 10px #3C4041"
@@ -213,10 +232,10 @@ const Page: NextPageWithLayout = () => {
         
         <Dynamiclistview list={list} setList={setList} select={select} />
       </Box>
-      <Box sx={{ mt:3,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
+      <Box sx={{ mt:3.5,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
         <Box sx={{ mt: 3,ml:4 ,pr:3}}>
           <Box sx={{ 
-            maxHeight: "500px",
+            maxHeight: "450px",
         
 
             // boxShadow:"inset 0 0 10px #3C4041"
@@ -269,14 +288,14 @@ const Page: NextPageWithLayout = () => {
               height: "300px",
               borderRadius: "10px",
               mt: 2.,
-              mb:2,
+              mb:1,
               overflowY:"hidden"
              
             }}
           >
            &nbsp;&nbsp;&nbsp; order
             <Box>
-              <Stack sx={{px:3}}>
+              <Stack sx={{px:2}}>
                 <Typography sx={{ fontSize: "18px", color: "#ffff", mt: 4 }}>
                   {/* {
                     JSON.stringify(cartItems)
@@ -365,7 +384,7 @@ Page.getLayout = function getLayout(page: ReactElement) {
     "&::-webkit-scrollbar-corner": {
       backgroundColor: "transparent", // Hide scrollbar corner on WebKit-based browsers
     },
-    maxHeight: "140vh",
+    height: "140vh",
     overflowY: "auto",
     // "&::-webkit-scrollbar": {
     //   width: 10,
