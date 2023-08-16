@@ -1,7 +1,8 @@
 # Restraunat-Management-POS
 
 A Restaurant Management POS (Point of Sale) Billing App is a software application specifically designed to facilitate and optimize the billing and transaction processes within a restaurant or foodservice establishment. It serves as a comprehensive solution that combines multiple functions, including order management, billing, inventory tracking, and reporting, all in one convenient platform.
-  https://restraunat-management-pos.vercel.app/menu
+latest working branch p-3
+[  https://restraunat-management-pos.vercel.app/menu](https://restraunat-management-git-7112ca-shashankofficial3209-gmailcom.vercel.app/menu)
 
 
 ## Screenshots
