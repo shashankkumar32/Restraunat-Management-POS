@@ -18,16 +18,16 @@ import PrintIcon from "@mui/icons-material/Print";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import ReactToPrint from "react-to-print";
 interface BillData {
-    _id: string;
-    customerName: string;
-    customerNumber: string;
-    subTotal: number;
-    tax: number;
-    totalAmount: number;
-    date: Date;
-    cartItems: { name: string; quantity: number; price: number }[];
-  }
-  
+  _id: string;
+  customerName: string;
+  customerNumber: number;
+  totalAmount: number;
+  subTotal: number;
+  tax: number;
+  paymentMode: string;
+  cartItems: string[]; // Changed to an array of strings
+  date: string;
+}
 
 interface InvoiceProps {
   isOpen: boolean;
@@ -50,11 +50,17 @@ const Invoice: React.FC<InvoiceProps> = ({ isOpen, onClose, invoiceData, themeCo
             Invoice Number: {invoiceData?._id}
           </Typography>
           <Typography variant="subtitle1">
-            {invoiceData?.date.toDateString()}
+            {invoiceData?.date.toString()}
           </Typography>
         </div>
-        <div style={{ margin: "20px 0", backgroundColor: "#f5f5f5", padding: "10px", border: "1px solid #ccc" }}>
+        <div style={{ margin: "20px 0", backgroundColor: "#f5f5f5", padding: "10px", border: "1px solid #ccc",display:"flex",justifyContent:"space-evenly" }}>
           {/* Customer info content */}
+          <Typography variant="h6">
+            Customer Name:{invoiceData?.customerName}
+          </Typography>
+          <Typography variant="h6">
+            Customer Number: {invoiceData?.customerNumber}
+          </Typography>
         </div>
         <TableContainer component={Paper}>
           <Table>
@@ -67,12 +73,13 @@ const Invoice: React.FC<InvoiceProps> = ({ isOpen, onClose, invoiceData, themeCo
               </TableRow>
             </TableHead>
             <TableBody>
-            {invoiceData?.cartItems.map((d,i)=>
+              {/* {JSON.stringify(invoiceData?.cartItems)} */}
+            {invoiceData?.cartItems.map((d:any,i)=>
             {return(
 
                 <TableRow key={i}>
 
-            <TableCell key={d.name}>{d.name}</TableCell>
+            <TableCell key={d._id}>{d._id}</TableCell>
                 <TableCell key={d.quantity}>{d.quantity}</TableCell>
                 <TableCell key={d.price}>{d.price}</TableCell>
                 <TableCell key={i}>{d.price*d.quantity}</TableCell>

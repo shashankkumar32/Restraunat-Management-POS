@@ -7,7 +7,7 @@ import { useDispatch,useSelector} from "react-redux";
 const AddBillForm = () => {
   const [formData, setFormData] = useState({
     customerName: "",
-    customerNumber: "",
+    customerNumber: Number,
     totalAmount: "",
     subTotal: "",
     tax: "",
@@ -28,17 +28,17 @@ const AddBillForm = () => {
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
-    const final ={...formData,cartItems:cartItems,totalAmount:totalAmount,subTotal:totalAmount,}
+    const final ={...formData,cartItems:cartItems,totalAmount:totalAmount,subTotal:totalAmount,tax:10,paymentMode:"Cash"}
     console.log(formData)
     console.log(final)
-    // try {
-    //   const response = await axios.post("/bills/add", formData);
-    //   console.log(response.data); // The response from the server
-    //   // Optionally, you can show a success message or perform other actions here
-    // } catch (error) {
-    //   console.error(error);
-    //   // Handle error, show error message, etc.
-    // }
+    try {
+      const response = await axios.post("https://backb.onrender.com/api/bills/add-bills", final);
+      console.log(response.data); // The response from the server
+      // Optionally, you can show a success message or perform other actions here
+    } catch (error) {
+      console.error(error);
+      // Handle error, show error message, etc.
+    }
   };
 
   return (

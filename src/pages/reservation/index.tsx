@@ -41,9 +41,9 @@ const Page: NextPageWithLayout = () => {
     setDeleteStatus(true);
   };
 
-  return <div style={{ background: 'linear-gradient(45deg, rgb(17,19,21), rgb(255,192,203), rgb(60,64,65))', height: '93vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  return <div style={{ background: "rgb(17,19,21)", height: '97vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-    <StickyHeadTable billsData={BillData.length?BillData:[]} handleOpenDelete={handleOpenDelete} checked={checked}/>
+    <StickyHeadTable  handleOpenDelete={handleOpenDelete} checked={checked}/>
     {/* <Invoice/> */}
   </div>
 };

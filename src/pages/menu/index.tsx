@@ -44,7 +44,62 @@ import { Anchor } from "@mui/icons-material";
 import AddBillForm from "./inc/billingfor";
 import AddIcon from '@mui/icons-material/Add';
 import { motion } from "framer-motion";
+import CustomIcon from "../accounting/inc/customIcon.js";
+import axios from "axios";
 type Anchor = "top" | "left" | "bottom" | "right";
+interface Data{
+  text:string,
+  color:string,
+  icons:string
+}
+interface Category {
+  _id: string;
+  text: string;
+  color: string;
+  icon: string;
+}
+const data:Data[] = [
+  {
+    text: "Breakfast",
+    color: "rgba(207,221,219,40)",
+    icons:'FreeBreakfast'
+  },
+  {
+    text: "Soups",
+    color: "rgb(230,208,238,40)",
+    icons:'SoupKitchen'
+  },
+  {
+    text: "Pasta",
+    color: "rgb(241,200,208)",
+    icons:"RamenDining" 
+  },
+  {
+    text: "Sushi",
+    color: "rgb(201,202,239)",
+    icons:"RiceBowl" 
+  },
+  {
+    text: "Main Course",
+    color: "rgb(250,193,217)",
+    icons:"Restaurant" 
+  },
+  {
+    text: "Deserts",
+    color: "rgb(229,218,222)",
+    icons:"Cake" 
+  },
+  {
+    text: "Drinks",
+    color: "rgb(241,200,208)",
+    icons:"Cake" 
+  },
+  {
+    text: "Alcohol",
+    color: "rgb(194,233,221)",
+    icons:"Cake" 
+  },
+];
 const Page: NextPageWithLayout = () => {
   const [select, setSelect] = React.useState('');
   const [list, setList] = useState([]);
@@ -76,6 +131,19 @@ const Page: NextPageWithLayout = () => {
       window.scrollTo(0, scrollLimit);
     }
   };
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    // Fetch category data from the API using Axios
+    axios
+      .get<Category[]>("https://backb.onrender.com/api/category/get-categories")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
 
   useEffect(() => {
     const handleScrollEvent = () => {
@@ -120,48 +188,6 @@ const Page: NextPageWithLayout = () => {
   const totalAmount = useSelector((state:any) => state.totalAmount);
 
 
-  const data = [
-    {
-      text: "Breakfast",
-      color: "rgba(207,221,219,40)",
-      icon:<FreeBreakfastIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Soups",
-      color: "rgb(230,208,238,40)",
-      icons:<SoupKitchenIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Pasta",
-      color: "rgb(241,200,208)",
-      icons:<RamenDiningIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Sushi",
-      color: "rgb(201,202,239)",
-      icons:<RiceBowlIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Main Course",
-      color: "rgb(250,193,217)",
-      icons:<RestaurantIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Deserts",
-      color: "rgb(229,218,222)",
-      icons:<CakeIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Drinks",
-      color: "rgb(241,200,208)",
-      icons:<CakeIcon sx={{color:"black"}}/>
-    },
-    {
-      text: "Alcohol",
-      color: "rgb(194,233,221)",
-      icons:<CakeIcon sx={{color:"black"}}/>
-    },
-  ];
 
   const Data = (anchor: Anchor) => (
     <Box
@@ -198,34 +224,44 @@ const Page: NextPageWithLayout = () => {
           // boxShadow:"inset 0 0 10px #3C4041"
            }} lg={12}>
           {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
-          {data.map(({ text, color,icons }, index) => (
+          {categories?.map(({ _id, text, color, icon }, index) => (
             <Grid item key={index} lg={3} md={5} sm={6} xs={12}>
-              <Button sx={{textTransform:"none"}} onClick={() => setSelect(text)} variant="contained">
-                <Box
-                  sx={{
-                    WebkitBackdropFilter:"blur(8px)",
-                    backdropFilter:"blur(8px)",
-                    backgroundColor: `${color}`,
-                    // backgroundColor: "rgb(228 228 228 / 15%)",
-                    borderRadius: "10px",
-                    p: 1,
-                    boxShadow:"rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
-                    mt: 1,
-                    height: "120px",
-                    width: "180px",
-                  }}
+                   <motion.div
+                initial={{ y: 50, opacity: 0 }} // Initial position below the grid, not visible
+                animate={{ y: 0, opacity: 1 }} // Final position in the grid, fully visible
+                exit={{ y: 50, opacity: 0 }} // Exit animation
+                transition={{ duration: 0.5, delay: index * 0.1 }} // Adjust the delay for staggered appearance
+              >
+                <Button
+                  sx={{ textTransform: "none" }}
+                  onClick={() => setSelect(text)}
+                  variant="contained"
                 >
-                  <Stack>
-
-                  {icons}
-                  
-                  <Typography sx={{color:"black",fontWeight:500,fontSize:"20px"}}>
-                    
-                    {text}
-                    </Typography>
-                  </Stack>
-                </Box>
-              </Button>
+                  <Box
+                    sx={{
+                      WebkitBackdropFilter: "blur(8px)",
+                      backdropFilter: "blur(8px)",
+                      backgroundColor: `${color}`,
+                      borderRadius: "10px",
+                      p: 1,
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
+                      mt: 1,
+                      height: "120px",
+                      width: "180px",
+                    }}
+                  >
+                    <Stack>
+                      <CustomIcon iconName={icon} />
+                      <Typography
+                        sx={{ color: "black", fontWeight: 500, fontSize: "20px" }}
+                      >
+                        {text}
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Button>
+              </motion.div>
             </Grid>
           ))}
         </Grid>
@@ -314,7 +350,7 @@ const Page: NextPageWithLayout = () => {
                   Tax:
                 </Typography>
                 <Typography sx={{ fontSize: "12px", color: "#ffff", mt: 4 }}>
-                  Total:{totalAmount}
+                  Total:{totalAmount.toFixed(2)}
                 </Typography>
                 <Button   onClick={toggleDrawer("right", true)} sx={{backgroundColor:"white",color:"black",fontSize:"19px",fontWeight:"500",mt:4}}>
                   Place Order
