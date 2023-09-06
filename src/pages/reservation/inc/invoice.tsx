@@ -92,13 +92,13 @@ const Invoice: React.FC<InvoiceProps> = ({ isOpen, onClose, invoiceData, themeCo
         </TableContainer>
         <div style={{ textAlign: "right", marginTop: "20px" }}>
           <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-            Subtotal: $100
+            Subtotal: 100
           </Typography>
           <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-            Tax: $10
+            Tax: 10
           </Typography>
           <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-            Total Amount: $110
+            Total Amount: 110
           </Typography>
         </div>
       </DialogContent>

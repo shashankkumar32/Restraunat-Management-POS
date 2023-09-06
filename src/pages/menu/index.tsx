@@ -18,6 +18,9 @@ import {
   ListItemButton,  
   ListItemIcon,
   Divider,
+  DialogContent,
+  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
@@ -36,7 +39,8 @@ import {
   hideLoading,
   showLoading, 
   updateCart,
-  deleteFromCart
+  deleteFromCart,
+  resetCart 
 } from "../../../slice/rootReducer";
 
 import TagFacesIcon from '@mui/icons-material/TagFaces';
@@ -132,13 +136,16 @@ const Page: NextPageWithLayout = () => {
     }
   };
   const [categories, setCategories] = useState<Category[]>([]);
+  const [loadState,setLoadState]=useState(true)
 
   useEffect(() => {
     // Fetch category data from the API using Axios
+    setLoadState(false)
     axios
       .get<Category[]>("https://backb.onrender.com/api/category/get-categories")
       .then((response) => {
         setCategories(response.data);
+        setLoadState(true)
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
@@ -191,16 +198,19 @@ const Page: NextPageWithLayout = () => {
 
   const Data = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{width:"370px",backgroundColor:"white",borderRadius:"15px",py:3,my:3}}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
       
-      <List>
+      <List sx={{display:"flex",justifyContent:"center"}}>
+        <Stack>
+          
       {
         cartItems.map((item:any,index:any) => (
-          <ListItem sx={{width:"420px"}} key={index} disablePadding>
+          <ListItem sx={{width:"400px"}} key={index} disablePadding>
       <ListItemButton >
         <ListItemIcon>
           {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
@@ -212,26 +222,29 @@ const Page: NextPageWithLayout = () => {
    
    ))
   }
+        </Stack>
       </List>
-  <Divider />
+  {/* <Divider /> */}
     
     </Box>
   )
   return (
     <Box sx={{ display: "flex", mt: 2,}}>
-      <Box sx={{ width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"} }}>
+      <Box sx={{ width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"},mx:4 }}>
         <Grid container sx={{ mt: 4,py:2,pl:2,height:{lg:"320px",md:"400px",sm:"500px",xs:"400px"},overflowY:"auto"
           // boxShadow:"inset 0 0 10px #3C4041"
            }} lg={12}>
-          {/* <Button onClick={() => AddCartItem()}> state change redux</Button> */}
+            {
+              loadState?
+          <>
           {categories?.map(({ _id, text, color, icon }, index) => (
             <Grid item key={index} lg={3} md={5} sm={6} xs={12}>
-                   <motion.div
+                   {/* <motion.div
                 initial={{ y: 50, opacity: 0 }} // Initial position below the grid, not visible
                 animate={{ y: 0, opacity: 1 }} // Final position in the grid, fully visible
                 exit={{ y: 50, opacity: 0 }} // Exit animation
                 transition={{ duration: 0.5, delay: index * 0.1 }} // Adjust the delay for staggered appearance
-              >
+              > */}
                 <Button
                   sx={{ textTransform: "none" }}
                   onClick={() => setSelect(text)}
@@ -261,9 +274,52 @@ const Page: NextPageWithLayout = () => {
                     </Stack>
                   </Box>
                 </Button>
-              </motion.div>
+              {/* </motion.div> */}
             </Grid>
           ))}
+          </>:
+          <Box sx={{   display: 'flex',
+          flexWrap: 'wrap',
+          alignContent: 'flex-start',justifyContent:"center" ,width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"}}}>
+          <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      /></Box>
+                <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      /></Box>
+                <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      /></Box>
+                <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      /></Box>
+                <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      />
+      </Box>
+                <Box sx={{m:1}}>    <Skeleton
+        sx={{ bgcolor: 'grey.900' }}
+        variant="rectangular"
+        width={180}
+        height={120}
+      /></Box> 
+      </Box>
+            }
         </Grid>
         
         <Dynamiclistview list={list} setList={setList} select={select} />
@@ -361,10 +417,20 @@ const Page: NextPageWithLayout = () => {
         open={state["right"]}
         onClose={toggleDrawer("right", false)}
         onOpen={toggleDrawer("right", true)}
-        sx={{width:"320px"}}
+        // sx={{width:"420px",borderRadius:"50%"}}
+        // sx={{backgroundColor:"black"}}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#111315",
+            borderRadius:"40px",
+            color: "black",
+          }
+        }}
       >
-         <DialogTitle
-          id="alert-dialog-title"
+         {/* <DialogTitle
+          id="alert-dialog-title" <label>
+        Customer Name:
+        </label>
           sx={{ borderBottom: "0.3px solid #E4E4E4" ,width:"400px"}}
         >
          On your Cart
@@ -382,9 +448,12 @@ const Page: NextPageWithLayout = () => {
           </IconButton>
           {/* {open ? (
         ) : null} */}
-        </DialogTitle>
+        {/* </DialogTitle>  */}
+        <DialogContent sx={{width:"420px"}}>
         {Data("right")} 
-        <AddBillForm/>
+
+        <AddBillForm onClose={toggleDrawer("right", false)}/>
+        </DialogContent>
 
         </SwipeableDrawer>
             </Box>

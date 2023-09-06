@@ -69,10 +69,14 @@ const rootReducerSlice = createSlice({
         state.cartItems = state.cartItems.filter((item) => item._id !== _id);
       }
     },
+    resetCart: (state) => {
+      state.cartItems = [];
+      state.totalAmount = 0;
+    },
   },
 });
 
-export const { showLoading, hideLoading, addToCart, updateCart, deleteFromCart } = rootReducerSlice.actions;
+export const { showLoading, hideLoading, addToCart, updateCart, deleteFromCart ,resetCart} = rootReducerSlice.actions;
 
 export default rootReducerSlice.reducer;
 
