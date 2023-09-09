@@ -30,6 +30,7 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
     "react-to-print": "^2.14.13",
+    "workbox-sw": "^7.0.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
