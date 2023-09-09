@@ -26,19 +26,19 @@ export interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
-  React.useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        }).catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-      });
-    }
+  // React.useEffect(() => {
+  //   if ('serviceWorker' in navigator) {
+  //     window.addEventListener('load', () => {
+  //       navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+  //         console.log('Service Worker registered with scope:', registration.scope);
+  //       }).catch((error) => {
+  //         console.error('Service Worker registration failed:', error);
+  //       });
+  //     });
+  //   }
     
     
-  }, []);
+  // }, []);
   return (
     <CacheProvider value={emotionCache}>
       <Head>

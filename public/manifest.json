@@ -2,7 +2,7 @@
     "name": "POS",
     "short_name": "POS",
     "description": "An example Progressive Web App",
-    "start_url": "/",
+    "start_url": "/menu",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#0078d4",
