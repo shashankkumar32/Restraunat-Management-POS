@@ -36,7 +36,18 @@ const PermanentDrawerLeft: React.FC<PermanentDrawerLeftProps> = ({ children }) =
   const [value, setValue] = React.useState(0);
   const [select, setSelect] = React.useState<string>("");
   const router = useRouter();
+  const simulateInstallPrompt = () => {
+    const event = new Event('beforeinstallprompt', {
+      bubbles: true,
+      cancelable: true,
+    });
+  
+    window.dispatchEvent(event);
+  };
 
+    const handleInstallClick = () => {
+    simulateInstallPrompt();
+  };
   const clickHandler = (text: string) => {
     setSelect(text);
     if (typeof text === 'string') {
@@ -77,7 +88,7 @@ const PermanentDrawerLeft: React.FC<PermanentDrawerLeftProps> = ({ children }) =
               variant="permanent"
               anchor="left"
             >
-              <Toolbar>dfdf</Toolbar>
+              <Toolbar><button onClick={handleInstallClick}>Simulate Install Prompt</button></Toolbar>
 
               <Divider />
               <List sx={{ backgroundColor: "primary.main", color: "primary.light" }}>
