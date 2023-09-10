@@ -1,10 +1,23 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// interface Order {
+//   customerName: string;
+//   customerNumber: number;
+//   totalAmount?: number; // Use optional properties if they are not always required
+//   subTotal?: number;   // Use optional properties if they are not always required
+//   tax?: number;        // Use optional properties if they are not always required
+//   paymentMode?: string; // Use optional properties if they are not always required
+//   cartItems: any[]; // Replace 'any[]' with the actual type of your cart items
+//   date?: Date; // Use optional properties if they are not always required
+// }
+
+
 interface RootState {
   loading: boolean;
   cartItems: CartItem[];
-  totalAmount: number; // Initialize totalAmount as a number, not null
+  totalAmount: number;
+  orders: any[]; // The 'orders' array will hold objects of varying shapes
 }
 
 interface CartItem {
@@ -16,7 +29,8 @@ interface CartItem {
 const initialState: RootState = {
   loading: false,
   cartItems: [],
-  totalAmount: 0, // Initialize totalAmount to 0
+  totalAmount: 0,
+  orders: [], // Initialize orders as an empty array
 };
 
 const rootReducerSlice = createSlice({
@@ -73,10 +87,18 @@ const rootReducerSlice = createSlice({
       state.cartItems = [];
       state.totalAmount = 0;
     },
+    addOrder: (state, action) => {
+      state.orders.unshift(action.payload);
+  
+      // Ensure that only the most recent 7 orders are kept
+      if (state.orders.length > 7) {
+        state.orders.pop();
+      }
+    },
   },
 });
 
-export const { showLoading, hideLoading, addToCart, updateCart, deleteFromCart ,resetCart} = rootReducerSlice.actions;
+export const { showLoading, hideLoading, addToCart, updateCart, deleteFromCart ,resetCart,addOrder} = rootReducerSlice.actions;
 
 export default rootReducerSlice.reducer;
 

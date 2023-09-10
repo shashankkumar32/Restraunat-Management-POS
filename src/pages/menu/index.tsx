@@ -21,6 +21,10 @@ import {
   DialogContent,
   CircularProgress,
   Skeleton,
+  useMediaQuery
+,
+  Avatar,
+  useTheme,
 } from "@mui/material";
 import PermanentDrawerLeft from "../../../layout/layout";
 import Dynamiclistview from "./inc/dynamiclistview";
@@ -50,6 +54,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { motion } from "framer-motion";
 import CustomIcon from "../accounting/inc/customIcon.js";
 import axios from "axios";
+import { deepOrange } from "@mui/material/colors";
 type Anchor = "top" | "left" | "bottom" | "right";
 interface Data{
   text:string,
@@ -62,6 +67,9 @@ interface Category {
   color: string;
   icon: string;
 }
+const colordata=[
+  "#CFDDDB","#E6D0EE","#C9CAEF","#C2E9DD","#F1C8D0","#FAC1D9","#C2E9DD"
+]
 const data:Data[] = [
   {
     text: "Breakfast",
@@ -192,7 +200,10 @@ const Page: NextPageWithLayout = () => {
     const height = `${90 + cartItems.length * 60}vh`; // Adjust the value based on your cart items' height
     setContainerHeight(height);
   }, [cartItems]);
+  const theme = useTheme();
   const totalAmount = useSelector((state:any) => state.totalAmount);
+  const recentOrders = useSelector((state:any) => state.orders);
+  const onlyMediumScreen = useMediaQuery(theme.breakpoints.down(1800));
 
 
 
@@ -323,6 +334,28 @@ const Page: NextPageWithLayout = () => {
         </Grid>
         
         <Dynamiclistview list={list} setList={setList} select={select} />
+          {
+            onlyMediumScreen&&
+        <Box sx={{height:"170px",width:"920px",mt:4,overflowX:"auto",display:"flex"}}>
+      {recentOrders.map((order:any, index:any) => (
+          <Box sx={{width:"315px",backgroundColor:"#000000",border:`solid 1px ${colordata[index]}`,my:2,borderRadius:"12px",height:"80px",display:"flex"}}key={index}>
+           <Avatar sx={{ bgcolor: colordata[index],height:"75px",width:"75px" }}>{order.customerName.charAt(0)}</Avatar>
+            <Box sx={{}}>
+            {/* Render order details here */}
+            <Typography>
+            {order.customerName}
+            </Typography>
+            
+            {
+              order.cartItems.map((d:any,index:any)=><Chip label={d._id} key={index} variant="outlined"/>)
+            }
+            </Box>
+            {/* {JSON.stringify(order.cartItems)} */}
+            {/* Add more order details */}
+          </Box>
+        ))}
+      </Box>
+          }
       </Box>
       <Box sx={{ mt:3.5,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
         <Box sx={{ mt: 3,ml:4 ,pr:3}}>
@@ -460,7 +493,28 @@ const Page: NextPageWithLayout = () => {
           </Box>
           </motion.div>
         </Box>
+      </Box>{
+        !onlyMediumScreen&&
+      <Box sx={{height:"900px",width:"322px",ml:"10px",mt:4,overflowY:"auto"}}>
+      {recentOrders.map((order:any, index:any) => (
+          <Box sx={{width:"315px",backgroundColor:"#000000",border:`solid 1px ${colordata[index]}`,my:2,borderRadius:"12px",height:"80px",display:"flex"}}key={index}>
+           <Avatar sx={{ bgcolor: colordata[index],height:"75px",width:"75px" }}>{order.customerName.charAt(0)}</Avatar>
+            <Box sx={{}}>
+            {/* Render order details here */}
+            <Typography>
+            {order.customerName}
+            </Typography>
+            
+            {
+              order.cartItems.map((d:any,index:any)=><Chip label={d._id} key={index} variant="outlined"/>)
+            }
+            </Box>
+            {/* {JSON.stringify(order.cartItems)} */}
+            {/* Add more order details */}
+          </Box>
+        ))}
       </Box>
+      }
     </Box>
   
   );

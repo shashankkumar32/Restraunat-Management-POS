@@ -3,8 +3,9 @@ import axios from "axios";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { useDispatch,useSelector} from "react-redux"; 
 
-import { resetCart } from '../../../../slice/rootReducer'; 
-
+import { resetCart ,addOrder} from '../../../../slice/rootReducer'; 
+// import { useDispatch } from 'react-redux';
+// import { addOrder } from './rootReducerSlice';
 
 const AddBillForm = (props:any)=> {
   const dispatch = useDispatch();
@@ -34,20 +35,21 @@ const AddBillForm = (props:any)=> {
     const final ={...formData,cartItems:cartItems,totalAmount:totalAmount,subTotal:totalAmount,tax:10,paymentMode:"Cash"}
     console.log(formData)
     console.log(final)
+    dispatch(addOrder(final));
+    dispatch(resetCart());
+    setFormData({
+      customerName: "",
+      customerNumber: Number,
+      totalAmount: "",
+      subTotal: "",
+      tax: "",
+      paymentMode: "",
+      cartItems: [],
+    });
     try {
       const response = await axios.post("https://backb.onrender.com/api/bills/add-bills", final);
       console.log(response.data); // The response from the server
       // Optionally, you can show a success message or perform other actions here
-      dispatch(resetCart());
-      setFormData({
-        customerName: "",
-        customerNumber: Number,
-        totalAmount: "",
-        subTotal: "",
-        tax: "",
-        paymentMode: "",
-        cartItems: [],
-      });
       setTimeout(() => {
         props.onClose();
       }, 0)
@@ -56,6 +58,7 @@ const AddBillForm = (props:any)=> {
       // Handle error, show error message, etc.
     }
   };
+ 
 
   return (
     <form onSubmit={handleSubmit}>

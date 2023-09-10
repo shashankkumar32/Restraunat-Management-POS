@@ -14,17 +14,19 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
 import { useRouter } from 'next/router';
-import { Paper, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Paper, useMediaQuery, useTheme } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import Anim from './anim.json'
+import Lottie from 'lottie-react';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArchiveIcon from "@mui/icons-material/Archive";
-const drawerWidth = 70;
+const drawerWidth = 75;
 
 interface PermanentDrawerLeftProps {
   children: React.ReactNode;
@@ -68,6 +70,7 @@ const PermanentDrawerLeft: React.FC<PermanentDrawerLeftProps> = ({ children }) =
             >
               <Toolbar>
                 <Typography variant="h6" noWrap component="div">
+                 
                   POS-Billing
                 </Typography>
               </Toolbar>
@@ -88,18 +91,18 @@ const PermanentDrawerLeft: React.FC<PermanentDrawerLeftProps> = ({ children }) =
               variant="permanent"
               anchor="left"
             >
-              <Toolbar><button onClick={handleInstallClick}>Simulate Install Prompt</button></Toolbar>
+            <div style={{ width: '70px', height: '70px' }}> <Lottie  animationData={Anim}/></div>
 
               <Divider />
               <List sx={{ backgroundColor: "primary.main", color: "primary.light" }}>
                 {[
-                  { text: "Menu", icon: <WidgetsIcon /> },
-                  { text: "Reservation", icon: <CreditScoreIcon /> },
-                  { text: "Accounting", icon: <EngineeringIcon /> },
-                  { text: "Delivery", icon: <DeliveryDiningIcon /> },
+                  { name:"Menu",text: "Menu", icon: <WidgetsIcon /> },
+                  { name:"Bill",text: "Reservation", icon: <CreditScoreIcon /> },
+                  { name:"Edit",text: "Accounting", icon: <EngineeringIcon /> },
+                  { name:"Ship",text: "Delivery", icon: <DeliveryDiningIcon /> },
                 ].map((item, index) => (
                   <ListItem key={index} disablePadding>
-                    <ListItemButton onClick={() => clickHandler(item.text)} sx={{ boxShadow: "inset 0.1px 0.2px 0.2px grey", fontSize: "9px", backgroundColor: select === item.text ? "#FFC0CB" : "", py: 4 }}>
+                    <ListItemButton onClick={() => clickHandler(item.text)} sx={{ boxShadow: "inset 0.1px 0.2px 0.2px grey", fontSize: "9px", backgroundColor: select === item.text ? "#FFC0CB" : "", py: 4 ,}}>
                       <Link
                         style={{ textDecoration: "none" }}
                         href={`/${item.text.toLowerCase()}`}
@@ -107,7 +110,7 @@ const PermanentDrawerLeft: React.FC<PermanentDrawerLeftProps> = ({ children }) =
                         <ListItemIcon sx={{ color: select === item.text ? "black" : "#ffffff", fontSize: "20px" }}>
                           {item.icon}
                         </ListItemIcon>
-                        <ListItemText sx={{ color: select === item.text ? "black" : "#ffffff", fontSize: "9px" }} primary={item.text} />
+                        <ListItemText sx={{ color: select === item.text ? "black" : "#ffffff", fontSize: "9px",width:"10px" }} primary={item.name} />
                       </Link>
                     </ListItemButton>
                   </ListItem>
