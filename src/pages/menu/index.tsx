@@ -241,7 +241,7 @@ const Page: NextPageWithLayout = () => {
   )
   return (
     <Box sx={{ display: "flex", mt: 2,}}>
-      <Box sx={{ width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"},mx:4 }}>
+      <Box sx={{ width:{ lg:"920px",md:"720px",sm:"600px",xs:"300px"},mx:2 }}>
         <Grid container sx={{ mt: 4,py:2,pl:2,height:{lg:"320px",md:"400px",sm:"500px",xs:"400px"},overflowY:"auto"
           // boxShadow:"inset 0 0 10px #3C4041"
            }} lg={12}>
@@ -357,10 +357,10 @@ const Page: NextPageWithLayout = () => {
       </Box>
           }
       </Box>
-      <Box sx={{ mt:3.5,ml:3,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
+      <Box sx={{ mt:3.5,ml:1,display:{md:"block",xs:"none"} ,backgroundColor: "#111315" ,height:"93vh",boxShadow:"rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset"}}>
         <Box sx={{ mt: 3,ml:4 ,pr:3}}>
           <Box sx={{ 
-            maxHeight: "450px",
+            maxHeight: "350px",
         
 
             // boxShadow:"inset 0 0 10px #3C4041"
