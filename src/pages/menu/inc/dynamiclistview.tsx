@@ -85,7 +85,7 @@ const Dynamiclistview: React.FC<props> = ({ select, list, setList }) => {
             >
               <Box>
                 <div>{text}</div>
-                <div>{`Price: $${price}`}</div>
+                <div>{`Price: Rs.${price}`}</div>
               </Box>
             </Button>
           </Grid>
